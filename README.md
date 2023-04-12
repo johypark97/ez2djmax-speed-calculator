@@ -1,38 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EZ2DJMAX Speed Calculator
 
-## Getting Started
+[DJMAX RESPECT V](https://store.steampowered.com/app/960170/DJMAX_RESPECT_V/)
+와
+[EZ2ON REBOOT : R](https://store.steampowered.com/app/1477590/EZ2ON_REBOOT__R/)
+서로 간에 노트 속도를 동일하게 설정할 수 있도록 배속을 계산해주는 간단한 계산기입니다.
 
-First, run the development server:
+## 도움말
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### 변환 방향
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+입력값을 어떻게 변환할 것인지 선택합니다.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **to DJMAX**: 입력값을 DJMAX 배속으로 변환합니다.
+- **to EZ2ON**: 입력값을 EZ2ON 배속으로 변환합니다.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 변환 방법
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+입력값을 어떠한 기준으로 변환할 것인지 선택합니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **동일 속도**: 스킨 비율에 관계 없이 동일한 속도가 되도록 계산합니다.
+- **동일 시간**: 노트가 보이기 시작한 직후부터 판정선에 도달하기 까지 걸린 시간이 동일하도록 계산합니다.
+EZ2ON의 *Judge line* 설정 (*NEW*와 *OLD*) 에 따른 스킨 높이 차이를 계산에 반영합니다.
