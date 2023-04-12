@@ -1,124 +1,268 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { Accordion } from '@/components/accordion';
+import { Hr, LightHr } from '@/components/hr';
+import { TextInput } from '@/components/input';
+import { ExternalLink } from '@/components/link';
+import { Radio } from '@/components/radio';
+import { RoundRadio } from '@/components/roundRadio';
+import {
+  Mode,
+  ModeType,
+  calcToDjmax,
+  calcToEz2on,
+} from '@/core/speedCalculator';
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import YouTube, { YouTubeProps } from 'react-youtube';
 
-const inter = Inter({ subsets: ['latin'] })
+const MODE_NEW_TEXT = '동일 시간 (NEW)';
+const MODE_OLD_TEXT = '동일 시간 (OLD)';
+const MODE_SAME_TEXT = '동일 속도';
+const TITLE = 'EZ2DJMAX 노트 속도 계산기';
+const TO_DJMAX_TEXT = 'to DJMAX';
+const TO_EZ2ON_TEXT = 'to EZ2ON';
+const URL_DJMAX = 'https://store.steampowered.com/app/960170/DJMAX_RESPECT_V/';
+const URL_EZ2ON = 'https://store.steampowered.com/app/1477590/EZ2ON_REBOOT__R/';
+const YOUTUBE_ID_50_58 = 'lKOdpC0Jj6M';
+const YOUTUBE_ID_70_81 = 'ik7PtSH1j8o';
 
 export default function Home() {
+  const [direction, setDirection] = useState<DirectionType>(Direction.TO_DJMAX);
+  const [inputValue, setInputValue] = useState('5');
+  const [mode, setMode] = useState<ModeType>(Mode.SAME);
+
+  const [output, setOutput] = useState('');
+  const [subOutput, setSubOutput] = useState('');
+
+  const showError = (text: string) => {
+    setOutput('X_X');
+    setSubOutput(text);
+  };
+
+  useEffect(() => {
+    if (!inputValue.trim()) {
+      setOutput('-.-');
+      setSubOutput('숫자를 입력해주세요');
+      return;
+    }
+
+    let value = parseFloat(inputValue);
+    if (isNaN(value)) {
+      showError('입력이 잘못되었습니다');
+      return;
+    } else if (value < 0) {
+      showError('양수를 입력해주세요');
+      return;
+    }
+
+    const calc = direction === Direction.TO_DJMAX ? calcToDjmax : calcToEz2on;
+    let speed = calc(value, mode);
+
+    setOutput((Math.round(speed * 10) / 10).toFixed(1));
+    setSubOutput((Math.round(speed * 10000) / 10000).toFixed(4));
+  }, [direction, inputValue, mode]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
+    <>
+      <Head>
+        <title>{TITLE}</title>
+      </Head>
+      <main className="container mx-auto min-h-screen max-w-screen-xl p-8">
+        <h1 className="mx-2">{TITLE}</h1>
+        <Hr />
+        <p className="mx-1">
+          <ExternalLink href={URL_DJMAX}>DJMAX RESPECT V</ExternalLink>와
+          <ExternalLink href={URL_EZ2ON}>EZ2ON REBOOT : R</ExternalLink>
+          서로 간에 노트 속도를 동일하게 설정할 수 있도록 배속을 계산해주는
+          간단한 계산기입니다.
         </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+        <div className="p-8" />
+
+        <div className="container mx-auto flex max-w-screen-sm flex-col">
+          <div className="flex space-x-4">
+            <div className="flex w-full flex-col items-end justify-around">
+              <RoundRadio.Group className="w-full max-w-[256px]">
+                <RoundRadio
+                  checked={direction === Direction.TO_DJMAX}
+                  id="direction-djmax"
+                  name="direction"
+                  onChange={() => setDirection(Direction.TO_DJMAX)}
+                >
+                  {TO_DJMAX_TEXT}
+                </RoundRadio>
+                <RoundRadio
+                  checked={direction === Direction.TO_EZ2ON}
+                  id="direction-ez2on"
+                  name="direction"
+                  onChange={() => setDirection(Direction.TO_EZ2ON)}
+                >
+                  {TO_EZ2ON_TEXT}
+                </RoundRadio>
+              </RoundRadio.Group>
+              <TextInput
+                className="h-10 w-full max-w-[256px]"
+                label="Speed"
+                onChange={(e) => setInputValue(e.currentTarget.value)}
+                value={inputValue}
+              />
+            </div>
+            <div className="w-full">
+              <Radio.Group>
+                <Radio
+                  checked={mode === Mode.SAME}
+                  id="mode-same"
+                  name="mode"
+                  onChange={() => setMode(Mode.SAME)}
+                >
+                  <p className="text-xl font-light">{MODE_SAME_TEXT}</p>
+                </Radio>
+                <Radio
+                  checked={mode === Mode.NEW}
+                  id="mode-new"
+                  name="mode"
+                  onChange={() => setMode(Mode.NEW)}
+                >
+                  <p className="text-xl font-light">{MODE_NEW_TEXT}</p>
+                </Radio>
+                <Radio
+                  checked={mode === Mode.OLD}
+                  id="mode-old"
+                  name="mode"
+                  onChange={() => setMode(Mode.OLD)}
+                >
+                  <p className="text-xl font-light">{MODE_OLD_TEXT}</p>
+                </Radio>
+              </Radio.Group>
+            </div>
+          </div>
+          <div className="p-4" />
+          <p className="text-center text-8xl tracking-tight">{output}</p>
+          <div className="p-2" />
+          <p className="text-center text-2xl">( {subOutput} )</p>
         </div>
-      </div>
+        <div className="p-8" />
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+        <div className="rounded-xl border-2 border-gray-200 p-4 shadow-md">
+          <Accordion id="acc-help" title="도움말">
+            <div className="m-4 border-y-2 border-gray-200 p-4">
+              <div>
+                <h2 className="p-2">변환 방향</h2>
+                <p>입력한 배속을 어떠한 방향으로 변환할 것인지 선택합니다.</p>
+                <table className="table-auto">
+                  <thead>
+                    <tr>
+                      <th>방향</th>
+                      <th>설명</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{TO_DJMAX_TEXT}</td>
+                      <td>입력한 배속을 DJMAX 배속으로 변환합니다.</td>
+                    </tr>
+                    <tr>
+                      <td>{TO_EZ2ON_TEXT}</td>
+                      <td>입력한 배속을 EZ2ON 배속으로 변환합니다.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 className="p-2">변환 방법</h2>
+                <p>
+                  입력한 배속을 어떠한 기준으로 변환할 것인지 선택합니다. 동일
+                  속도 방법은 노트 속도가 동일하도록, 동일 시간 방법은 노트가
+                  보이기 시작한 시점부터 판정선까지 도달하는 데 걸리는 시간이
+                  동일하도록 계산합니다.
+                </p>
+                <table className="table-auto">
+                  <thead>
+                    <tr>
+                      <th>방법</th>
+                      <th>설명</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{MODE_SAME_TEXT}</td>
+                      <td>
+                        스킨의 비율에 관계 없이 노트의 속도가 동일하도록
+                        계산합니다.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{MODE_NEW_TEXT}</td>
+                      <td>
+                        EZ2ON의 Judge line: NEW 설정 시의 스킨 높이를 고려하여
+                        노트 속도를 계산합니다.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{MODE_OLD_TEXT}</td>
+                      <td>
+                        EZ2ON의 Judge line: OLD 설정 시의 스킨 높이를 고려하여
+                        노트 속도를 계산합니다.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h2 className="p-2">사용 팁</h2>
+                <p>
+                  EZ2ON에서 FADE IN 1 이펙터를 사용하면 노트 출력 - 판정선
+                  까지의 높이가 DJMAX 스킨과 유사해집니다. DJMAX와 EZ2ON의 서로
+                  다른 스킨 높이에 적응이 힘들 경우 동일 속도 변환 설정과 함께
+                  FADE IN 1 이펙터 사용을 추천합니다.
+                </p>
+              </div>
+            </div>
+          </Accordion>
+          <LightHr />
+          <Accordion id="acc-comp" title="비교 영상">
+            <div className="m-4 border-y-2 border-gray-200 p-4">
+              <div className="flex flex-wrap justify-evenly">
+                <YoutubeCard
+                  id={YOUTUBE_ID_50_58}
+                  title="DJMAX 5.0 - EZ2ON 5.8"
+                />
+                <YoutubeCard
+                  id={YOUTUBE_ID_70_81}
+                  title="DJMAX 7.0 - EZ2ON 8.1"
+                />
+              </div>
+            </div>
+          </Accordion>
+        </div>
+      </main>
+    </>
+  );
 }
+
+export const Direction = {
+  TO_DJMAX: 'TO_DJMAX',
+  TO_EZ2ON: 'TO_EZ2ON',
+} as const;
+type DirectionType = (typeof Direction)[keyof typeof Direction];
+
+type YoutubeCardType = {
+  id: string;
+  title: string;
+};
+
+const YoutubeCard = ({ id, title }: YoutubeCardType) => {
+  const onPlayerReady: YouTubeProps['onReady'] = (e) => {
+    e.target.pauseVideo();
+  };
+
+  const opts: YouTubeProps['opts'] = {
+    height: '320',
+    width: '480',
+  };
+
+  return (
+    <div className="m-2 inline-flex flex-col items-center">
+      <YouTube onReady={onPlayerReady} opts={opts} videoId={id} />
+      <p>{title}</p>
+    </div>
+  );
+};
