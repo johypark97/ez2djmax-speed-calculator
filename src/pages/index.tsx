@@ -1,9 +1,8 @@
-import { Accordion } from '@/components/accordion';
-import { Hr, LightHr } from '@/components/hr';
-import { TextInput } from '@/components/input';
-import { ExternalLink } from '@/components/link';
-import { Radio } from '@/components/radio';
-import { RoundRadio } from '@/components/roundRadio';
+import Accordion from '@/components/accordion';
+import TextInput from '@/components/input';
+import ExternalLink from '@/components/link';
+import Radio from '@/components/radio';
+import RoundRadio from '@/components/roundRadio';
 import {
   Mode,
   ModeType,
@@ -27,54 +26,60 @@ const YOUTUBE_ID_70_81 = 'ik7PtSH1j8o';
 
 export default function Home() {
   const [direction, setDirection] = useState<DirectionType>(Direction.TO_DJMAX);
-  const [inputValue, setInputValue] = useState('5');
   const [mode, setMode] = useState<ModeType>(Mode.SAME);
+  const [speed, setSpeed] = useState('5');
 
   const [output, setOutput] = useState('');
   const [subOutput, setSubOutput] = useState('');
 
-  const showError = (text: string) => {
+  const showError = (message: string) => {
     setOutput('X_X');
-    setSubOutput(text);
+    setSubOutput(message);
+  };
+
+  const showValue = (value: number) => {
+    setOutput((Math.round(value * 10) / 10).toFixed(1));
+    setSubOutput((Math.round(value * 10000) / 10000).toFixed(4));
   };
 
   useEffect(() => {
-    if (!inputValue.trim()) {
+    if (!speed.trim()) {
       setOutput('-.-');
       setSubOutput('숫자를 입력해주세요');
       return;
     }
 
-    let value = parseFloat(inputValue);
-    if (isNaN(value)) {
+    let input = parseFloat(speed);
+    if (isNaN(input)) {
       showError('입력이 잘못되었습니다');
       return;
-    } else if (value < 0) {
+    } else if (input < 0) {
       showError('양수를 입력해주세요');
       return;
     }
 
     const calc = direction === Direction.TO_DJMAX ? calcToDjmax : calcToEz2on;
-    let speed = calc(value, mode);
-
-    setOutput((Math.round(speed * 10) / 10).toFixed(1));
-    setSubOutput((Math.round(speed * 10000) / 10000).toFixed(4));
-  }, [direction, inputValue, mode]);
+    let value = calc(input, mode);
+    showValue(value);
+  }, [direction, mode, speed]);
 
   return (
     <>
       <Head>
         <title>{TITLE}</title>
       </Head>
+
       <main className="container mx-auto min-h-screen max-w-screen-xl p-8">
-        <h1 className="mx-2">{TITLE}</h1>
-        <Hr />
-        <p className="mx-1">
-          <ExternalLink href={URL_DJMAX}>DJMAX RESPECT V</ExternalLink>와
-          <ExternalLink href={URL_EZ2ON}>EZ2ON REBOOT : R</ExternalLink>
-          서로 간에 노트 속도를 동일하게 설정할 수 있도록 배속을 계산해주는
-          간단한 계산기입니다.
-        </p>
+        <header>
+          <h1 className="mx-2">{TITLE}</h1>
+          <hr />
+          <p className="mx-1">
+            <ExternalLink href={URL_DJMAX}>DJMAX RESPECT V</ExternalLink>와
+            <ExternalLink href={URL_EZ2ON}>EZ2ON REBOOT : R</ExternalLink>
+            서로 간에 노트 속도를 동일하게 설정할 수 있도록 배속을 계산해주는
+            간단한 계산기입니다.
+          </p>
+        </header>
         <div className="p-8" />
 
         <div className="container mx-auto flex max-w-screen-sm flex-col">
@@ -101,8 +106,8 @@ export default function Home() {
               <TextInput
                 className="h-10 w-full max-w-[256px]"
                 label="Speed"
-                onChange={(e) => setInputValue(e.currentTarget.value)}
-                value={inputValue}
+                onChange={(e) => setSpeed(e.currentTarget.value)}
+                value={speed}
               />
             </div>
             <div className="w-full">
@@ -113,7 +118,7 @@ export default function Home() {
                   name="mode"
                   onChange={() => setMode(Mode.SAME)}
                 >
-                  <p className="text-xl font-light">{MODE_SAME_TEXT}</p>
+                  <span className="text-xl font-light">{MODE_SAME_TEXT}</span>
                 </Radio>
                 <Radio
                   checked={mode === Mode.NEW}
@@ -121,7 +126,7 @@ export default function Home() {
                   name="mode"
                   onChange={() => setMode(Mode.NEW)}
                 >
-                  <p className="text-xl font-light">{MODE_NEW_TEXT}</p>
+                  <span className="text-xl font-light">{MODE_NEW_TEXT}</span>
                 </Radio>
                 <Radio
                   checked={mode === Mode.OLD}
@@ -129,7 +134,7 @@ export default function Home() {
                   name="mode"
                   onChange={() => setMode(Mode.OLD)}
                 >
-                  <p className="text-xl font-light">{MODE_OLD_TEXT}</p>
+                  <span className="text-xl font-light">{MODE_OLD_TEXT}</span>
                 </Radio>
               </Radio.Group>
             </div>
@@ -143,8 +148,8 @@ export default function Home() {
 
         <div className="rounded-xl border-2 border-gray-200 p-4 shadow-md">
           <Accordion id="acc-help" title="도움말">
-            <div className="m-4 border-y-2 border-gray-200 p-4">
-              <div>
+            <section className="m-4 border-y-2 border-gray-200 p-4">
+              <article>
                 <h2 className="p-2">변환 방향</h2>
                 <p>입력한 배속을 어떠한 방향으로 변환할 것인지 선택합니다.</p>
                 <table className="table-auto">
@@ -165,8 +170,8 @@ export default function Home() {
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <div>
+              </article>
+              <article>
                 <h2 className="p-2">변환 방법</h2>
                 <p>
                   입력한 배속을 어떠한 기준으로 변환할 것인지 선택합니다. 동일
@@ -205,8 +210,8 @@ export default function Home() {
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <div>
+              </article>
+              <article>
                 <h2 className="p-2">사용 팁</h2>
                 <p>
                   EZ2ON에서 FADE IN 1 이펙터를 사용하면 노트 출력 - 판정선
@@ -214,23 +219,23 @@ export default function Home() {
                   다른 스킨 높이에 적응이 힘들 경우 동일 속도 변환 설정과 함께
                   FADE IN 1 이펙터 사용을 추천합니다.
                 </p>
-              </div>
-            </div>
+              </article>
+            </section>
           </Accordion>
-          <LightHr />
+          <hr className="bg-gray-400" />
           <Accordion id="acc-comp" title="비교 영상">
-            <div className="m-4 border-y-2 border-gray-200 p-4">
+            <section className="m-4 border-y-2 border-gray-200 p-4">
               <div className="flex flex-wrap justify-evenly">
-                <YoutubeCard
+                <YoutubeBox
                   id={YOUTUBE_ID_50_58}
                   title="DJMAX 5.0 - EZ2ON 5.8"
                 />
-                <YoutubeCard
+                <YoutubeBox
                   id={YOUTUBE_ID_70_81}
                   title="DJMAX 7.0 - EZ2ON 8.1"
                 />
               </div>
-            </div>
+            </section>
           </Accordion>
         </div>
       </main>
@@ -244,12 +249,12 @@ export const Direction = {
 } as const;
 type DirectionType = (typeof Direction)[keyof typeof Direction];
 
-type YoutubeCardType = {
+type YoutubeBoxType = {
   id: string;
   title: string;
 };
 
-const YoutubeCard = ({ id, title }: YoutubeCardType) => {
+function YoutubeBox({ id, title }: YoutubeBoxType) {
   const onPlayerReady: YouTubeProps['onReady'] = (e) => {
     e.target.pauseVideo();
   };
@@ -260,9 +265,9 @@ const YoutubeCard = ({ id, title }: YoutubeCardType) => {
   };
 
   return (
-    <div className="m-2 inline-flex flex-col items-center">
+    <figure className="m-2 inline-flex flex-col items-center">
       <YouTube onReady={onPlayerReady} opts={opts} videoId={id} />
-      <p>{title}</p>
-    </div>
+      <figcaption>{title}</figcaption>
+    </figure>
   );
-};
+}

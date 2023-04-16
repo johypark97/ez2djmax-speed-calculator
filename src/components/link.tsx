@@ -1,17 +1,14 @@
-import Link from 'next/link';
-import { PropsWithChildren } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 
-type ExternalLinkProps = {
-  href: string;
-} & PropsWithChildren;
+type ExternalLinkProps = ComponentPropsWithoutRef<'a'>;
 
-export const ExternalLink = ({ children, href }: ExternalLinkProps) => (
-  <Link
-    className="px-2 text-blue-500 hover:underline"
-    href={href}
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    {children}
-  </Link>
-);
+export default function ExternalLink({
+  children,
+  ...props
+}: ExternalLinkProps) {
+  return (
+    <a rel="noopener noreferrer" target="_blank" {...props}>
+      {children}
+    </a>
+  );
+}

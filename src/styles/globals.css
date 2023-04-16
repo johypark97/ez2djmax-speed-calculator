@@ -2,26 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-  font-size: 1.5rem;
-  line-height: 2rem;
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  hr {
+    @apply my-2
+      h-px
+      border-0
+      bg-gray-800;
+  }
+
+  a {
+    @apply px-2
+      text-blue-500
+      hover:underline;
+  }
+
+  table {
+    @apply m-8
+      border-collapse;
+  }
+
+  tr {
+    @apply border-b
+      border-solid
+      border-gray-400;
+  }
+
+  th,
+  td {
+    @apply p-4;
+  }
 }
 
-h2 {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
+@layer components {
+  .accordion > div {
+    @apply invisible
+      max-h-0
+      overflow-auto
+      transition-all
+      duration-500
+      ease-in-out;
+  }
 
-table {
-  border-collapse: collapse;
-  margin: 2rem;
-}
+  .accordion > label {
+    @apply mx-2
+      flex
+      cursor-pointer
+      select-none
+      justify-between
+      text-xl
+      after:text-2xl
+      after:transition-transform
+      after:content-['<']
+      hover:bg-gray-100;
+  }
 
-tr {
-  border-bottom: 1px solid #A0A0A0;
-}
+  .radio {
+    @apply inline-flex
+      items-center;
+  }
 
-td,
-th {
-  padding: 1rem;
+  .radio > input {
+    @apply h-4
+      w-4
+      focus:ring-2
+      focus:ring-blue-200;
+  }
+
+  .radio > label {
+    @apply ml-2
+      cursor-pointer
+      select-none;
+  }
+
+  .radio-group {
+    @apply flex
+      flex-col
+      space-y-2;
+  }
+
+  .round-radio {
+    @apply w-full;
+  }
+
+  .round-radio > label {
+    @apply block
+      cursor-pointer
+      select-none
+      whitespace-nowrap
+      rounded-full
+      px-4
+      py-2
+      text-center
+      text-white
+      transition-colors
+      hover:bg-blue-400;
+  }
+
+  .round-radio-group {
+    @apply flex
+      rounded-full
+      border-2
+      border-blue-600
+      bg-blue-600;
+  }
+
+  .text-input {
+    @apply flex
+      border-gray-400;
+  }
+
+  .text-input > input {
+    @apply w-full
+      rounded-r-full
+      border-2
+      border-l-0
+      border-inherit
+      px-4
+      text-lg;
+  }
+
+  .text-input > span {
+    @apply inline-flex
+      select-none
+      items-center
+      rounded-l-full
+      border-2
+      border-r-0
+      border-inherit
+      bg-gray-100
+      px-4
+      text-lg;
+  }
 }
