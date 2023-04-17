@@ -13,8 +13,10 @@ export default function TextInput({
 
   return (
     <div className={className0}>
-      <span>{label}</span>
-      <input type="text" {...props} />
+      <input className="peer focus:border-blue-600" type="text" {...props} />
+      <label className="peer-focus:border-blue-600" htmlFor={props.id}>
+        {label}
+      </label>
     </div>
   );
 }

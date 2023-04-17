@@ -32,6 +32,12 @@ export default function Home() {
   const [output, setOutput] = useState('');
   const [subOutput, setSubOutput] = useState('');
 
+  const onChangeSpeed = (value: string) => {
+    if (value.length <= 8) {
+      setSpeed(value);
+    }
+  };
+
   const showError = (message: string) => {
     setOutput('X_X');
     setSubOutput(message);
@@ -43,6 +49,11 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (speed.length > 8) {
+      setSpeed(speed.substring(0, 8));
+      return;
+    }
+
     if (!speed.trim()) {
       setOutput('-.-');
       setSubOutput('숫자를 입력해주세요');
@@ -105,8 +116,9 @@ export default function Home() {
               </RoundRadio.Group>
               <TextInput
                 className="h-10 w-full max-w-[256px]"
+                id="speed"
                 label="Speed"
-                onChange={(e) => setSpeed(e.currentTarget.value)}
+                onChange={(e) => onChangeSpeed(e.currentTarget.value)}
                 value={speed}
               />
             </div>
@@ -260,8 +272,8 @@ function YoutubeBox({ id, title }: YoutubeBoxType) {
   };
 
   const opts: YouTubeProps['opts'] = {
-    height: '320',
-    width: '480',
+    height: '324',
+    width: '300',
   };
 
   return (
