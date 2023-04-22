@@ -1,11 +1,10 @@
+const isProduction = process.env.NODE_ENV === 'production';
+
+const assetPrefix = isProduction ? '.' : '';
+
 /** @type {import('next').NextConfig} */
-
-const IS_PROD = process.env.NODE_ENV === 'production';
-
-const PREFIX = IS_PROD ? '.' : undefined;
-
 const nextConfig = {
-  assetPrefix: PREFIX,
+  assetPrefix: assetPrefix,
   output: 'export',
   reactStrictMode: true,
 };
