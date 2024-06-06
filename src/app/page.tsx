@@ -1,3 +1,5 @@
+'use client';
+
 import Accordion from '@/components/accordion';
 import TextInput from '@/components/input';
 import ExternalLink from '@/components/link';
