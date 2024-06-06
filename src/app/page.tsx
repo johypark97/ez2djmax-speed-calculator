@@ -14,6 +14,7 @@ import {
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
+import { Direction, DirectionType } from './direction';
 
 const MODE_NEW_TEXT = '동일 시간 (NEW)';
 const MODE_OLD_TEXT = '동일 시간 (OLD)';
@@ -256,12 +257,6 @@ export default function Home() {
     </>
   );
 }
-
-export const Direction = {
-  TO_DJMAX: 'TO_DJMAX',
-  TO_EZ2ON: 'TO_EZ2ON',
-} as const;
-type DirectionType = (typeof Direction)[keyof typeof Direction];
 
 type YoutubeBoxType = {
   id: string;
