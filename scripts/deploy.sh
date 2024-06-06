@@ -48,26 +48,44 @@ function main()
         exit 1
     fi
 
+    local githubPagesUrl
+    while :; do
+        local username
+        local repository
+
+        read -p "GitHub username to deploy this project: " username
+        read -p "GitHub repository name of this project: " repository
+
+        githubPagesUrl="https://$username.github.io/$repository"
+        echo
+        echo "Created GitHub Pages url is '$githubPagesUrl/'"
+
+        confirmYesNo "Do you want to distribute to this URL?" && break
+        echo
+    done
+
     local commitMessage="Deploy v$version"
 
+    echo
     echo "-------- Last commit --------"
     echo "$( git log -1 )"
     echo
     echo "-------- Deploy information --------"
     echo "Project version: $version"
     echo "Deploy commit messages: $commitMessage"
+    echo "Asset prefix url: $githubPagesUrl"
     echo
 
     confirmYesNo "Do you want to deploy the last commit?"
-
     if (( ! $? )); then
+        echo
         echo "-------- Deploying --------"
         echo
 
         # [[ -e $DIST_DIR ]] && rm -rf $DIST_DIR
         # [[ -e .next ]] && rm -rf .next
 
-        next build || exit 1
+        ASSET_PREFIX=$githubPagesUrl next build || exit 1
 
         touch $DIST_DIR/.nojekyll
         git add -f $DIST_DIR/

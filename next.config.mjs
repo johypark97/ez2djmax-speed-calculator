@@ -1,6 +1,6 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
-const assetPrefix = isProduction ? '.' : '';
+const assetPrefix = isProduction ? process.env.ASSET_PREFIX : '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
