@@ -12,27 +12,19 @@
   }
 
   hr {
-    @apply my-2
-      h-px
-      border-0
-      bg-gray-800;
+    @apply my-2 h-px border-0 bg-gray-800;
   }
 
   a {
-    @apply px-2
-      text-blue-500
-      hover:underline;
+    @apply px-2 text-blue-500 hover:underline;
   }
 
   table {
-    @apply m-8
-      border-collapse;
+    @apply m-8 border-collapse;
   }
 
   tr {
-    @apply border-b
-      border-solid
-      border-gray-400;
+    @apply border-b border-solid border-gray-400;
   }
 
   th,
@@ -43,102 +35,58 @@
 
 @layer components {
   .accordion > div {
-    @apply invisible
-      max-h-0
-      overflow-auto
-      transition-all
-      duration-500
-      ease-in-out;
+    @apply invisible max-h-0 overflow-auto transition-all duration-500 ease-in-out;
   }
 
   .accordion > label {
-    @apply mx-2
-      flex
-      cursor-pointer
-      select-none
-      justify-between
-      text-xl
-      after:text-2xl
-      after:transition-transform
-      after:content-['<']
-      hover:bg-gray-100;
+    @apply mx-2 flex cursor-pointer select-none justify-between text-xl after:text-2xl after:transition-transform after:content-['<'] hover:bg-gray-100;
   }
 
-  .radio {
-    @apply flex
-      items-center;
+  .flat-radio-list {
+    @apply space-y-2;
   }
 
-  .radio > input {
-    @apply h-4
-      w-4;
+  .flat-radio-list > div {
+    @apply space-x-2;
   }
 
-  .radio > label {
-    @apply ml-2
-      cursor-pointer
-      select-none;
+  .flat-radio-list > div > input {
+    @apply size-4;
   }
 
-  .radio-group {
-    @apply flex
-      flex-col
-      space-y-2;
+  .flat-radio-list > div > label {
+    @apply cursor-pointer select-none text-xl font-light;
   }
 
-  .round-radio {
+  .round-radio-list {
+    @apply flex rounded-full border-2 border-blue-600 bg-blue-600 has-[:focus-visible]:ring-8;
+  }
+
+  .round-radio-list > div {
     @apply w-full;
   }
 
-  .round-radio > label {
-    @apply block
-      cursor-pointer
-      select-none
-      whitespace-nowrap
-      rounded-full
-      px-4
-      py-2
-      text-center
-      text-white
-      transition-colors
-      hover:bg-blue-400;
+  .round-radio-list > div > input {
+    @apply absolute opacity-0;
   }
 
-  .round-radio-group {
-    @apply flex
-      rounded-full
-      border-2
-      border-blue-600
-      bg-blue-600;
+  .round-radio-list > div > label {
+    @apply block cursor-pointer select-none whitespace-nowrap rounded-full px-4 py-2 text-center text-white transition-colors hover:bg-blue-400;
+  }
+
+  .round-radio-list > div:has(:checked) > label {
+    @apply bg-white text-black;
   }
 
   .text-input {
-    @apply flex
-      border-gray-400;
+    @apply flex border-gray-400;
   }
 
   .text-input > input {
-    @apply w-full
-      rounded-r-full
-      border-2
-      border-l-0
-      border-inherit
-      px-4
-      text-lg
-      outline-none;
+    @apply w-full rounded-r-full border-2 border-l-0 border-inherit px-4 text-lg outline-none;
   }
 
   .text-input > label {
-    @apply -order-1
-      flex
-      select-none
-      items-center
-      rounded-l-full
-      border-2
-      border-r-0
-      border-inherit
-      bg-gray-200
-      px-4
-      text-lg;
+    @apply -order-1 flex select-none items-center rounded-l-full border-2 border-r-0 border-inherit bg-gray-200 px-4 text-lg;
   }
 }

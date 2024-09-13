@@ -3,8 +3,7 @@
 import Accordion from '@/components/accordion';
 import TextInput from '@/components/input';
 import ExternalLink from '@/components/link';
-import Radio from '@/components/radio';
-import RoundRadio from '@/components/roundRadio';
+import RadioOptionList, { OptionMap } from '@/components/radioOption';
 import {
   Mode,
   ModeType,
@@ -26,6 +25,30 @@ const URL_DJMAX = 'https://store.steampowered.com/app/960170/DJMAX_RESPECT_V/';
 const URL_EZ2ON = 'https://store.steampowered.com/app/1477590/EZ2ON_REBOOT__R/';
 const YOUTUBE_ID_50_58 = 'lKOdpC0Jj6M';
 const YOUTUBE_ID_70_81 = 'ik7PtSH1j8o';
+
+const directionOptionMap: OptionMap = new Map();
+directionOptionMap.set(Direction.TO_DJMAX, {
+  id: 'djmax',
+  text: TO_DJMAX_TEXT,
+});
+directionOptionMap.set(Direction.TO_EZ2ON, {
+  id: 'ez2on',
+  text: TO_EZ2ON_TEXT,
+});
+
+const modeOptionMap: OptionMap = new Map();
+modeOptionMap.set(Mode.SAME, {
+  id: 'same',
+  text: MODE_SAME_TEXT,
+});
+modeOptionMap.set(Mode.NEW, {
+  id: 'new',
+  text: MODE_NEW_TEXT,
+});
+modeOptionMap.set(Mode.OLD, {
+  id: 'old',
+  text: MODE_OLD_TEXT,
+});
 
 export default function Home() {
   const [direction, setDirection] = useState<DirectionType>(Direction.TO_DJMAX);
@@ -99,24 +122,14 @@ export default function Home() {
         <div className="container mx-auto flex max-w-screen-sm flex-col">
           <div className="flex space-x-4">
             <div className="flex w-full flex-col items-end justify-around">
-              <RoundRadio.Group className="w-full max-w-[256px]">
-                <RoundRadio
-                  checked={direction === Direction.TO_DJMAX}
-                  id="direction-djmax"
+              <div className="round-radio-list w-full max-w-[256px]">
+                <RadioOptionList
                   name="direction"
-                  onChange={() => setDirection(Direction.TO_DJMAX)}
-                >
-                  {TO_DJMAX_TEXT}
-                </RoundRadio>
-                <RoundRadio
-                  checked={direction === Direction.TO_EZ2ON}
-                  id="direction-ez2on"
-                  name="direction"
-                  onChange={() => setDirection(Direction.TO_EZ2ON)}
-                >
-                  {TO_EZ2ON_TEXT}
-                </RoundRadio>
-              </RoundRadio.Group>
+                  onSelectOption={setDirection}
+                  optionMap={directionOptionMap}
+                  selectedOptionKey={direction}
+                />
+              </div>
               <TextInput
                 className="h-10 w-full max-w-[256px]"
                 id="speed"
@@ -126,32 +139,14 @@ export default function Home() {
               />
             </div>
             <div className="w-full">
-              <Radio.Group>
-                <Radio
-                  checked={mode === Mode.SAME}
-                  id="mode-same"
+              <div className="flat-radio-list">
+                <RadioOptionList
                   name="mode"
-                  onChange={() => setMode(Mode.SAME)}
-                >
-                  <span className="text-xl font-light">{MODE_SAME_TEXT}</span>
-                </Radio>
-                <Radio
-                  checked={mode === Mode.NEW}
-                  id="mode-new"
-                  name="mode"
-                  onChange={() => setMode(Mode.NEW)}
-                >
-                  <span className="text-xl font-light">{MODE_NEW_TEXT}</span>
-                </Radio>
-                <Radio
-                  checked={mode === Mode.OLD}
-                  id="mode-old"
-                  name="mode"
-                  onChange={() => setMode(Mode.OLD)}
-                >
-                  <span className="text-xl font-light">{MODE_OLD_TEXT}</span>
-                </Radio>
-              </Radio.Group>
+                  onSelectOption={setMode}
+                  optionMap={modeOptionMap}
+                  selectedOptionKey={mode}
+                />
+              </div>
             </div>
           </div>
           <div className="p-4" />
