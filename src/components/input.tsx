@@ -1,22 +1,22 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-type TextInputProps = {
-  label: string;
-} & ComponentPropsWithoutRef<'input'>;
+export interface TextInputProps
+  extends Pick<
+    ComponentPropsWithoutRef<'input'>,
+    'children' | 'className' | 'id' | 'onChange' | 'value'
+  > {}
 
 export default function TextInput({
+  children,
   className,
-  label,
   ...props
 }: TextInputProps) {
   const className0 = [className, 'text-input'].filter((x) => !!x).join(' ');
 
   return (
     <div className={className0}>
-      <input className="peer focus:border-blue-600" type="text" {...props} />
-      <label className="peer-focus:border-blue-600" htmlFor={props.id}>
-        {label}
-      </label>
+      <input placeholder="" type="text" {...props} />
+      <label htmlFor={props.id}>{children}</label>
     </div>
   );
 }

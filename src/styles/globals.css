@@ -42,12 +42,29 @@
     @apply mx-2 flex cursor-pointer select-none justify-between text-xl after:text-2xl after:transition-transform after:content-['<'] hover:bg-gray-100;
   }
 
+  .dropdown {
+    @apply relative;
+  }
+
+  .dropdown > button {
+    @apply w-full cursor-pointer rounded-xl border-2 border-gray-400 p-4 text-center hover:border-blue-600;
+  }
+
+  .dropdown > div {
+    @apply absolute z-10 h-0 w-full -translate-y-10 overflow-hidden opacity-0 duration-200 ease-out;
+  }
+
+  .dropdown > div:hover,
+  .dropdown:focus-within > div {
+    @apply h-fit translate-y-0 opacity-100;
+  }
+
   .flat-radio-list {
     @apply space-y-2;
   }
 
   .flat-radio-list > div {
-    @apply space-x-2;
+    @apply flex items-center justify-center space-x-2;
   }
 
   .flat-radio-list > div > input {
@@ -59,7 +76,7 @@
   }
 
   .round-radio-list {
-    @apply flex rounded-full border-2 border-blue-600 bg-blue-600 has-[:focus-visible]:ring-8;
+    @apply rounded-xl border-2 border-blue-600 bg-blue-600 has-[:focus-visible]:bg-blue-400;
   }
 
   .round-radio-list > div {
@@ -71,7 +88,7 @@
   }
 
   .round-radio-list > div > label {
-    @apply block cursor-pointer select-none whitespace-nowrap rounded-full px-4 py-2 text-center text-white transition-colors hover:bg-blue-400;
+    @apply block cursor-pointer select-none whitespace-nowrap rounded-xl px-16 py-4 text-center text-white transition-colors hover:bg-blue-400;
   }
 
   .round-radio-list > div:has(:checked) > label {
@@ -79,14 +96,23 @@
   }
 
   .text-input {
-    @apply flex border-gray-400;
+    @apply relative border-b-2 border-gray-400 text-4xl duration-200 focus-within:border-blue-600;
   }
 
   .text-input > input {
-    @apply w-full rounded-r-full border-2 border-l-0 border-inherit px-4 text-lg outline-none;
+    @apply ml-4 block w-full focus:outline-none;
   }
 
   .text-input > label {
-    @apply -order-1 flex select-none items-center rounded-l-full border-2 border-r-0 border-inherit bg-gray-200 px-4 text-lg;
+    @apply absolute top-0 cursor-text select-none text-2xl duration-200;
+  }
+
+  .text-input:focus-within > label {
+    @apply text-blue-600;
+  }
+
+  .text-input > input:not(:placeholder-shown) + label,
+  .text-input:focus-within > label {
+    @apply -translate-y-8 scale-75;
   }
 }
