@@ -4,7 +4,10 @@ import Accordion from '@/components/accordion';
 import Dropdown from '@/components/dropdown';
 import TextInput from '@/components/input';
 import ExternalLink from '@/components/link';
-import RadioOptionList, { OptionMap } from '@/components/radioOption';
+import {
+  RadioOptionList,
+  RadioOptionMap,
+} from '@/components/option/radioOption';
 import {
   calculateNoteTime,
   convertSpeed_bar,
@@ -35,7 +38,7 @@ const URL_EZ2ON = 'https://store.steampowered.com/app/1477590/EZ2ON_REBOOT__R/';
 const YOUTUBE_ID_50_58 = 'lKOdpC0Jj6M';
 const YOUTUBE_ID_70_81 = 'ik7PtSH1j8o';
 
-const graphicOptionMap: OptionMap<Graphic> = new Map();
+const graphicOptionMap: RadioOptionMap<Graphic> = new Map();
 graphicOptionMap.set(GRAPHIC_DJMAX, {
   id: 'djmax',
   text: GRAPHIC_DJMAX_TEXT,
@@ -55,7 +58,7 @@ const ConvertMode = {
 } as const;
 type ConvertModeType = (typeof ConvertMode)[keyof typeof ConvertMode];
 
-const convertModeOptionMap: OptionMap<ConvertModeType> = new Map();
+const convertModeOptionMap: RadioOptionMap<ConvertModeType> = new Map();
 convertModeOptionMap.set(ConvertMode.SAME_SPEED, {
   id: 'same-speed',
   text: CONVERT_MODE_SAME_SPEED,
