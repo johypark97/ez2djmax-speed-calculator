@@ -5,6 +5,10 @@ import Dropdown from '@/components/dropdown';
 import TextInput from '@/components/input';
 import ExternalLink from '@/components/link';
 import {
+  ButtonOptionList,
+  ButtonOptionMap,
+} from '@/components/option/buttonOption';
+import {
   RadioOptionList,
   RadioOptionMap,
 } from '@/components/option/radioOption';
@@ -38,7 +42,7 @@ const URL_EZ2ON = 'https://store.steampowered.com/app/1477590/EZ2ON_REBOOT__R/';
 const YOUTUBE_ID_50_58 = 'lKOdpC0Jj6M';
 const YOUTUBE_ID_70_81 = 'ik7PtSH1j8o';
 
-const graphicOptionMap: RadioOptionMap<Graphic> = new Map();
+const graphicOptionMap: ButtonOptionMap<Graphic> = new Map();
 graphicOptionMap.set(GRAPHIC_DJMAX, {
   id: 'djmax',
   text: GRAPHIC_DJMAX_TEXT,
@@ -168,30 +172,28 @@ export default function Home() {
             <h2 className="text-center">변환 대상</h2>
             <div className="grid grid-cols-[max-content_auto] gap-4">
               <h2 className="content-center">입력</h2>
-              <Dropdown
-                onMouseLeave={() => unfocus()}
-                text={getDropdownText(inputGraphic)}
-              >
-                <div className="round-radio-list">
-                  <RadioOptionList
+              <Dropdown text={getDropdownText(inputGraphic)}>
+                <div className="round-button-list">
+                  <ButtonOptionList
                     name="input-graphic"
-                    onSelectOption={setInputGraphic}
+                    onSelectOption={(x) => {
+                      setInputGraphic(x);
+                      unfocus();
+                    }}
                     optionMap={graphicOptionMap}
-                    selectedOptionKey={inputGraphic}
                   />
                 </div>
               </Dropdown>
               <h2 className="content-center">출력</h2>
-              <Dropdown
-                onMouseLeave={() => unfocus()}
-                text={getDropdownText(outputGraphic)}
-              >
-                <div className="round-radio-list">
-                  <RadioOptionList
+              <Dropdown text={getDropdownText(outputGraphic)}>
+                <div className="round-button-list">
+                  <ButtonOptionList
                     name="output-graphic"
-                    onSelectOption={setOutputGraphic}
+                    onSelectOption={(x) => {
+                      setOutputGraphic(x);
+                      unfocus();
+                    }}
                     optionMap={graphicOptionMap}
-                    selectedOptionKey={outputGraphic}
                   />
                 </div>
               </Dropdown>

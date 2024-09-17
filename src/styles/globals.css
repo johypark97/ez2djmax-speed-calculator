@@ -54,7 +54,6 @@
     @apply absolute z-10 h-0 w-full -translate-y-10 overflow-hidden opacity-0 duration-200 ease-out;
   }
 
-  .dropdown > div:hover,
   .dropdown:focus-within > div {
     @apply h-fit translate-y-0 opacity-100;
   }
@@ -73,6 +72,19 @@
 
   .flat-radio-list > div > label {
     @apply cursor-pointer select-none text-xl font-light;
+  }
+
+  .round-button-list {
+    @apply rounded-xl border-2 border-blue-600 bg-blue-600;
+  }
+
+  .round-button-list > button {
+    @apply w-full rounded-xl px-16 py-4 text-white transition-colors;
+  }
+
+  .round-button-list > button:focus,
+  .round-button-list > button:hover {
+    @apply bg-white text-black;
   }
 
   .round-radio-list {
