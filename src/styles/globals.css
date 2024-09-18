@@ -35,11 +35,23 @@
 
 @layer components {
   .accordion > div {
-    @apply invisible max-h-0 overflow-auto transition-all duration-500 ease-in-out;
+    @apply invisible max-h-0 overflow-auto duration-500 ease-in-out;
+  }
+
+  .accordion > input {
+    @apply hidden;
   }
 
   .accordion > label {
     @apply mx-2 flex cursor-pointer select-none justify-between text-xl after:text-2xl after:transition-transform after:content-['<'] hover:bg-gray-100;
+  }
+
+  .accordion:has(:checked) > label::after {
+    @apply -rotate-90;
+  }
+
+  .accordion:has(:checked) > div {
+    @apply visible max-h-screen;
   }
 
   .dropdown {

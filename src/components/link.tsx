@@ -1,14 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-type ExternalLinkProps = ComponentPropsWithoutRef<'a'>;
+export interface ExternalLinkProps
+  extends Omit<ComponentPropsWithoutRef<'a'>, 'rel' | 'target'> {}
 
-export default function ExternalLink({
-  children,
-  ...props
-}: ExternalLinkProps) {
-  return (
-    <a rel="noopener noreferrer" target="_blank" {...props}>
-      {children}
-    </a>
-  );
+export default function ExternalLink({ ...props }: ExternalLinkProps) {
+  return <a rel="noopener noreferrer" target="_blank" {...props} />;
 }

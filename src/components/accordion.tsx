@@ -1,20 +1,24 @@
-import { PropsWithChildren } from 'react';
+import { HTMLAttributes } from 'react';
 
-type AccordionProps = {
+export interface AccordionProps
+  extends Pick<HTMLAttributes<Element>, 'children' | 'className'> {
   id: string;
   title: string;
-} & PropsWithChildren;
+}
 
-export default function Accordion({ children, id, title }: AccordionProps) {
+export default function Accordion({
+  children,
+  className,
+  id,
+  title,
+}: AccordionProps) {
+  const className0 = [className, 'accordion'].filter((x) => !!x).join(' ');
+
   return (
-    <div className="accordion">
-      <input className="peer hidden" id={id} type="checkbox" />
-      <label className="peer-checked:after:-rotate-90" htmlFor={id}>
-        {title}
-      </label>
-      <div className="peer-checked:visible peer-checked:max-h-screen">
-        {children}
-      </div>
+    <div className={className0}>
+      <input id={id} type="checkbox" />
+      <label htmlFor={id}>{title}</label>
+      <div>{children}</div>
     </div>
   );
 }
