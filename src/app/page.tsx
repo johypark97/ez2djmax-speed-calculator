@@ -237,96 +237,100 @@ export default function Home() {
 
         <div className="rounded-xl border-2 border-gray-200 p-4 shadow-md">
           <Accordion id="acc-help" title="도움말">
-            <section className="m-4 border-y-2 border-gray-200 p-4">
-              <article>
-                <h2 className="p-2">변환 대상</h2>
-                <p>
-                  입력한 배속을 어떠한 게임의 배속으로 해석하고 변활할 것인지
-                  선택합니다. 입력한 배속은 &quot;입력&quot;에 지정한 게임의
-                  배속으로 해석되어 &quot;출력&quot;에 지정한 게임의 배속으로
-                  변환됩니다.
-                </p>
-                <table className="table-auto">
-                  <thead>
-                    <tr>
-                      <th>대상</th>
-                      <th>설명</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{GRAPHIC_DJMAX_TEXT}</td>
-                      <td>DJMAX의 배속과 스킨을 계산에 사용합니다.</td>
-                    </tr>
-                    <tr>
-                      <td>{GRAPHIC_EZ2ON_NEW_TEXT}</td>
-                      <td>
-                        EZ2ON의 배속과 Judge line: NEW 설정 시의 스킨을 계산에
-                        사용합니다.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>{GRAPHIC_EZ2ON_OLD_TEXT}</td>
-                      <td>
-                        EZ2ON의 배속과 Judge line: OLD 설정 시의 스킨을 계산에
-                        사용합니다.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </article>
-              <article>
-                <h2 className="p-2">변환 방법</h2>
-                <p>
-                  입력한 배속을 어떠한 기준으로 변환할 것인지 선택합니다.
-                  &quot;동일 속도&quot; 방법은 노트 속도가 동일하도록,
-                  &quot;동일 시간&quot; 방법은 노트가 보이기 시작한 시점부터
-                  판정선까지 도달하는 데 걸리는 시간이 동일하도록 계산합니다.
-                </p>
-                <table className="table-auto">
-                  <thead>
-                    <tr>
-                      <th>방법</th>
-                      <th>설명</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{CONVERT_MODE_SAME_SPEED}</td>
-                      <td>노트의 속도가 동일하도록 계산합니다.</td>
-                    </tr>
-                    <tr>
-                      <td>{CONVERT_MODE_SAME_TIME}</td>
-                      <td>노트의 출력 시간이 동일하도록 계산합니다.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </article>
-              <article>
-                <h2 className="p-2">사용 팁</h2>
-                <p>
-                  EZ2ON에서 FADE IN 1 이펙터를 사용하면 노트 출력 - 판정선
-                  까지의 높이가 DJMAX 스킨과 유사해집니다. DJMAX와 EZ2ON의 서로
-                  다른 스킨 높이에 적응이 힘들 경우 &quot;동일 속도&quot; 변환
-                  설정과 함께 FADE IN 1 이펙터 사용을 추천합니다.
-                </p>
-              </article>
-            </section>
+            <div className="p-4">
+              <section className="border-y-2 border-gray-200 p-4">
+                <article>
+                  <h2 className="p-2">변환 대상</h2>
+                  <p>
+                    입력한 배속을 어떠한 게임의 배속으로 해석하고 변활할 것인지
+                    선택합니다. 입력한 배속은 &quot;입력&quot;에 지정한 게임의
+                    배속으로 해석되어 &quot;출력&quot;에 지정한 게임의 배속으로
+                    변환됩니다.
+                  </p>
+                  <table className="table-auto">
+                    <thead>
+                      <tr>
+                        <th>대상</th>
+                        <th>설명</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{GRAPHIC_DJMAX_TEXT}</td>
+                        <td>DJMAX의 배속과 스킨을 계산에 사용합니다.</td>
+                      </tr>
+                      <tr>
+                        <td>{GRAPHIC_EZ2ON_NEW_TEXT}</td>
+                        <td>
+                          EZ2ON의 배속과 Judge line: NEW 설정 시의 스킨을 계산에
+                          사용합니다.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{GRAPHIC_EZ2ON_OLD_TEXT}</td>
+                        <td>
+                          EZ2ON의 배속과 Judge line: OLD 설정 시의 스킨을 계산에
+                          사용합니다.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </article>
+                <article>
+                  <h2 className="p-2">변환 방법</h2>
+                  <p>
+                    입력한 배속을 어떠한 기준으로 변환할 것인지 선택합니다.
+                    &quot;동일 속도&quot; 방법은 노트 속도가 동일하도록,
+                    &quot;동일 시간&quot; 방법은 노트가 보이기 시작한 시점부터
+                    판정선까지 도달하는 데 걸리는 시간이 동일하도록 계산합니다.
+                  </p>
+                  <table className="table-auto">
+                    <thead>
+                      <tr>
+                        <th>방법</th>
+                        <th>설명</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{CONVERT_MODE_SAME_SPEED}</td>
+                        <td>노트의 속도가 동일하도록 계산합니다.</td>
+                      </tr>
+                      <tr>
+                        <td>{CONVERT_MODE_SAME_TIME}</td>
+                        <td>노트의 출력 시간이 동일하도록 계산합니다.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </article>
+                <article>
+                  <h2 className="p-2">사용 팁</h2>
+                  <p>
+                    EZ2ON에서 FADE IN 1 이펙터를 사용하면 노트 출력 - 판정선
+                    까지의 높이가 DJMAX 스킨과 유사해집니다. DJMAX와 EZ2ON의
+                    서로 다른 스킨 높이에 적응이 힘들 경우 &quot;동일 속도&quot;
+                    변환 설정과 함께 FADE IN 1 이펙터 사용을 추천합니다.
+                  </p>
+                </article>
+              </section>
+            </div>
           </Accordion>
           <hr className="bg-gray-400" />
           <Accordion id="acc-comp" title="비교 영상">
-            <section className="m-4 border-y-2 border-gray-200 p-4">
-              <div className="flex flex-wrap justify-evenly">
-                <YoutubeBox
-                  id={YOUTUBE_ID_50_58}
-                  title="DJMAX 5.0 - EZ2ON 5.8"
-                />
-                <YoutubeBox
-                  id={YOUTUBE_ID_70_81}
-                  title="DJMAX 7.0 - EZ2ON 8.1"
-                />
-              </div>
-            </section>
+            <div className="p-4">
+              <section className="border-y-2 border-gray-200 p-4">
+                <div className="flex flex-wrap justify-evenly">
+                  <YoutubeBox
+                    id={YOUTUBE_ID_50_58}
+                    title="DJMAX 5.0 - EZ2ON 5.8"
+                  />
+                  <YoutubeBox
+                    id={YOUTUBE_ID_70_81}
+                    title="DJMAX 7.0 - EZ2ON 8.1"
+                  />
+                </div>
+              </section>
+            </div>
           </Accordion>
         </div>
       </main>

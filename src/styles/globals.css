@@ -34,12 +34,12 @@
 }
 
 @layer components {
-  .accordion > div {
-    @apply invisible max-h-0 overflow-auto duration-500 ease-in-out;
+  .accordion > input {
+    @apply absolute opacity-0;
   }
 
-  .accordion > input {
-    @apply hidden;
+  .accordion > input:focus-visible + label {
+    @apply ring-2;
   }
 
   .accordion > label {
@@ -50,8 +50,12 @@
     @apply -rotate-90;
   }
 
+  .accordion > div {
+    @apply invisible overflow-hidden duration-500 ease-in-out;
+  }
+
   .accordion:has(:checked) > div {
-    @apply visible max-h-screen;
+    @apply visible;
   }
 
   .dropdown {
