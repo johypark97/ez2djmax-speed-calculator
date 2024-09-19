@@ -17,10 +17,10 @@ export interface RadioOptionMapValue
   id: string;
 }
 
-export interface RadioOptionMap<
-  K = any,
+export type RadioOptionMap<
+  K,
   V extends RadioOptionMapValue = RadioOptionMapValue,
-> extends OptionMap<K, V> {}
+> = OptionMap<K, V>;
 
 // =============================
 // -------- RadioOption --------

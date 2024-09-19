@@ -1,10 +1,9 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-export interface TextInputProps
-  extends Pick<
-    ComponentPropsWithoutRef<'input'>,
-    'children' | 'className' | 'id' | 'onChange' | 'value'
-  > {}
+export type TextInputProps = Pick<
+  ComponentPropsWithoutRef<'input'>,
+  'children' | 'className' | 'id' | 'onChange' | 'value'
+>;
 
 export default function TextInput({
   children,

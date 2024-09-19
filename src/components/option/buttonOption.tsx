@@ -17,21 +17,19 @@ export interface ButtonOptionMapValue
   id: string;
 }
 
-export interface ButtonOptionMap<
-  K = any,
+export type ButtonOptionMap<
+  K,
   V extends ButtonOptionMapValue = ButtonOptionMapValue,
-> extends OptionMap<K, V> {}
+> = OptionMap<K, V>;
 
 // ==============================
 // -------- ButtonOption --------
 // ==============================
 
-export interface ButtonOptionProps<K, V extends ButtonOptionMapValue>
-  extends BaseOptionProps<
-    K,
-    V,
-    MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  > {}
+export type ButtonOptionProps<
+  K,
+  V extends ButtonOptionMapValue,
+> = BaseOptionProps<K, V, MouseEvent<HTMLButtonElement, globalThis.MouseEvent>>;
 
 export function ButtonOption<K, V extends ButtonOptionMapValue>({
   onSelectOption,

@@ -8,7 +8,7 @@ export interface OptionMapValue {
   text?: string;
 }
 
-export interface OptionMap<K, V extends OptionMapValue> extends Map<K, V> {}
+export type OptionMap<K, V extends OptionMapValue> = Map<K, V>;
 
 // =================================
 // -------- BaseOptionProps --------
@@ -26,7 +26,7 @@ export interface TextFactory<K, V extends OptionMapValue> {
   (entry: [K, V]): DOMAttributes<Element>['children'];
 }
 
-export const defaultTextFactory: TextFactory<any, OptionMapValue> = (x) =>
+export const defaultTextFactory: TextFactory<unknown, OptionMapValue> = (x) =>
   x[1].text;
 
 export interface BaseOptionProps<
