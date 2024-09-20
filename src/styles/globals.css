@@ -46,7 +46,7 @@
     @apply mx-2 flex cursor-pointer select-none justify-between text-xl after:text-2xl after:transition-transform after:content-['<'] hover:bg-gray-100;
   }
 
-  .accordion:has(:checked) > label::after {
+  .accordion > input:checked + label::after {
     @apply -rotate-90;
   }
 
@@ -54,7 +54,7 @@
     @apply invisible overflow-hidden duration-500 ease-in-out;
   }
 
-  .accordion:has(:checked) > div {
+  .accordion > input:checked ~ div {
     @apply visible;
   }
 
