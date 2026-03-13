@@ -1,19 +1,18 @@
-import { ChangeEvent, ComponentPropsWithoutRef } from 'react';
-import {
+import type { ChangeEvent, ComponentPropsWithoutRef } from 'react';
+import type {
   BaseOptionListProps,
   BaseOptionProps,
-  defaultTextFactory,
   OptionMap,
   OptionMapValue,
 } from './optionMap';
+import { defaultTextFactory } from './optionMap';
 
 // ================================
 // -------- RadioOptionMap --------
 // ================================
 
 export interface RadioOptionMapValue
-  extends OptionMapValue,
-    Pick<ComponentPropsWithoutRef<'input'>, 'value'> {
+  extends OptionMapValue, Pick<ComponentPropsWithoutRef<'input'>, 'value'> {
   id: string;
 }
 
@@ -26,8 +25,10 @@ export type RadioOptionMap<
 // -------- RadioOption --------
 // =============================
 
-export interface RadioOptionProps<K, V extends RadioOptionMapValue>
-  extends BaseOptionProps<K, V, ChangeEvent<HTMLInputElement>> {
+export interface RadioOptionProps<
+  K,
+  V extends RadioOptionMapValue,
+> extends BaseOptionProps<K, V, ChangeEvent<HTMLInputElement>> {
   id: string;
   name: string;
   selectedOptionKey: K;
@@ -59,7 +60,8 @@ export function RadioOption<K, V extends RadioOptionMapValue>({
 // =================================
 
 export interface RadioOptionListProps<K, V extends RadioOptionMapValue>
-  extends BaseOptionListProps<K, V>,
+  extends
+    BaseOptionListProps<K, V>,
     Omit<RadioOptionProps<K, V>, 'id' | 'optionEntry'> {}
 
 export function RadioOptionList<K, V extends RadioOptionMapValue>({

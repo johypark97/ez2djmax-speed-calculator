@@ -1,33 +1,23 @@
-'use client';
-
-import Accordion from '@/components/accordion';
-import Dropdown from '@/components/dropdown';
-import TextInput from '@/components/input';
-import ExternalLink from '@/components/link';
-import {
-  ButtonOptionList,
-  ButtonOptionMap,
-} from '@/components/option/buttonOption';
-import {
-  RadioOptionList,
-  RadioOptionMap,
-} from '@/components/option/radioOption';
+import Accordion from '~/components/accordion';
+import Dropdown from '~/components/dropdown';
+import TextInput from '~/components/input';
+import ExternalLink from '~/components/link';
+import type { ButtonOptionMap } from '~/components/option/buttonOption';
+import { ButtonOptionList } from '~/components/option/buttonOption';
+import type { RadioOptionMap } from '~/components/option/radioOption';
+import { RadioOptionList } from '~/components/option/radioOption';
+import type { ConvertSpeedFunction, Graphic } from '~/core/calculator';
 import {
   calculateNoteTime,
   convertSpeed_bar,
   convertSpeed_height,
-  ConvertSpeedFunction,
-  Graphic,
   GRAPHIC_DJMAX,
   GRAPHIC_EZ2ON_NEW,
   GRAPHIC_EZ2ON_OLD,
-} from '@/core/calculator';
-import { unfocus } from '@/utility/utility';
-import Head from 'next/head';
+} from '~/core/calculator';
+import { unfocus } from '~/utility/utility';
 import { useEffect, useState } from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
-
-const TITLE = 'EZ2DJMAX 노트 속도 계산기';
+import ReactPlayer from 'react-player';
 
 const DEFAULT_SELECT_GRAPHIC_TEXT = '( 선택 )';
 const GRAPHIC_DJMAX_TEXT = 'DJMAX';
@@ -72,7 +62,7 @@ convertModeOptionMap.set(ConvertMode.SAME_TIME, {
   text: CONVERT_MODE_SAME_TIME,
 });
 
-export default function Home() {
+export default function Front() {
   const [convertMode, setConvertMode] = useState<ConvertModeType>(
     ConvertMode.SAME_SPEED,
   );
@@ -150,13 +140,9 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>{TITLE}</title>
-      </Head>
-
       <main className="container mx-auto min-h-screen p-8 lg:max-w-screen-lg">
         <header>
-          <h1 className="mx-2">{TITLE}</h1>
+          <h1 className="mx-2">EZ2DJMAX 노트 속도 계산기</h1>
           <hr />
           <p className="mx-1">
             <ExternalLink href={URL_DJMAX}>DJMAX RESPECT V</ExternalLink>와
@@ -167,7 +153,7 @@ export default function Home() {
         </header>
         <div className="p-8" />
 
-        <div className="m-auto max-w-screen-sm flex-row space-x-0 space-y-8 *:space-y-4 md:flex md:space-x-8 md:space-y-0">
+        <div className="m-auto max-w-screen-sm flex-row space-y-8 space-x-0 *:space-y-4 md:flex md:space-y-0 md:space-x-8">
           <div className="basis-3/4">
             <h2 className="text-center">변환 대상</h2>
             <div className="grid grid-cols-[max-content_auto] gap-4">
@@ -223,7 +209,7 @@ export default function Home() {
             >
               Speed
             </TextInput>
-            <span className="text-nowrap text-2xl text-blue-600">
+            <span className="text-2xl text-nowrap text-blue-600">
               {inputTimeText} [ms]
             </span>
           </div>
@@ -344,18 +330,14 @@ type YoutubeBoxType = {
 };
 
 function YoutubeBox({ id, title }: YoutubeBoxType) {
-  const onPlayerReady: YouTubeProps['onReady'] = (e) => {
-    e.target.pauseVideo();
-  };
-
-  const opts: YouTubeProps['opts'] = {
-    height: '324',
-    width: '300',
-  };
-
   return (
     <figure className="m-2 inline-flex flex-col items-center">
-      <YouTube onReady={onPlayerReady} opts={opts} videoId={id} />
+      <ReactPlayer
+        src={`https://www.youtube.com/watch?v=${id}`}
+        controls={true}
+        width={300}
+        height={324}
+      />
       <figcaption>{title}</figcaption>
     </figure>
   );

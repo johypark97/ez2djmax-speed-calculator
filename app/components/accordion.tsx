@@ -1,10 +1,10 @@
-import { ComponentPropsWithoutRef, useRef, useState } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
+import { useRef, useState } from 'react';
 
-export interface AccordionProps
-  extends Pick<
-    ComponentPropsWithoutRef<'input'>,
-    'children' | 'className' | 'defaultChecked'
-  > {
+export interface AccordionProps extends Pick<
+  ComponentPropsWithoutRef<'input'>,
+  'children' | 'className' | 'defaultChecked'
+> {
   id: string;
   title: string;
 }

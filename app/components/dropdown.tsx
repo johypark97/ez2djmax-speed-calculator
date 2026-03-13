@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, DOMAttributes } from 'react';
+import type { ComponentPropsWithoutRef, DOMAttributes } from 'react';
 
 interface DropdownProps extends ComponentPropsWithoutRef<'div'> {
   text?: DOMAttributes<Element>['children'];

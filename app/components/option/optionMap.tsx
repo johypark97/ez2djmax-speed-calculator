@@ -2,7 +2,7 @@
 // -------- OptionMap --------
 // ===========================
 
-import { DOMAttributes, SyntheticEvent } from 'react';
+import type { DOMAttributes, SyntheticEvent } from 'react';
 
 export interface OptionMapValue {
   text?: string;

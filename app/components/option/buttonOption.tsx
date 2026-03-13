@@ -1,19 +1,18 @@
-import { ComponentPropsWithoutRef, MouseEvent } from 'react';
-import {
+import type { ComponentPropsWithoutRef, MouseEvent } from 'react';
+import type {
   BaseOptionListProps,
   BaseOptionProps,
-  defaultTextFactory,
   OptionMap,
   OptionMapValue,
 } from './optionMap';
+import { defaultTextFactory } from './optionMap';
 
 // =================================
 // -------- ButtonOptionMap --------
 // =================================
 
 export interface ButtonOptionMapValue
-  extends OptionMapValue,
-    Pick<ComponentPropsWithoutRef<'button'>, 'value'> {
+  extends OptionMapValue, Pick<ComponentPropsWithoutRef<'button'>, 'value'> {
   id: string;
 }
 
@@ -51,7 +50,8 @@ export function ButtonOption<K, V extends ButtonOptionMapValue>({
 // ==================================
 
 export interface ButtonOptionListProps<K, V extends ButtonOptionMapValue>
-  extends BaseOptionListProps<K, V>,
+  extends
+    BaseOptionListProps<K, V>,
     Omit<ButtonOptionProps<K, V>, 'optionEntry'> {
   name: string;
 }
