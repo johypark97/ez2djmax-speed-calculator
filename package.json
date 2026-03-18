@@ -1,5 +1,6 @@
 {
   "name": "ez2djmax-speed-calculator",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
